@@ -7,8 +7,9 @@ import {
 } from '../controllers/auth.controller.js';
 const router = Router();
 import authenticate from '../middlewares/auth.js';
+import { OTPLimiter } from '../middlewares/ratelimitter.js';
 
-router.post('/signup', signUp);
+router.post('/signup', OTPLimiter,signUp);
 router.post('/otp-verification', OTPverification);
 router.post('/signin', signin);
 router.get("/user-list/:limit/:page",authenticate,listUser)
