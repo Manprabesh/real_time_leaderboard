@@ -27,8 +27,7 @@ import configRedis from './configs/redis.config.js';
 export let redisClient = await configRedis();
 import { dbConfig } from './configs/database.js';
 export let db = await dbConfig();
-// export  dbClient;
-// console.log("dbclient",dbClient)
+
 
 //import tables
 import { userTable } from './models/user.model.js';
@@ -46,10 +45,8 @@ import gameRouter from './routes/game.router.js';
 app.use(gameRouter);
 import leaderboardRouter from './routes/leaderboard.router.js';
 app.use(leaderboardRouter);
-app.listen(5000, async () => {
-    // dbClient = 
+app.listen(process.env.PORT || 3000, async () => {
 
-    // console.log(client)
     db.connect((err, client) => {
         if (err) {
 
@@ -61,9 +58,9 @@ app.listen(5000, async () => {
             gameTable(db);
             scoreTable(db);
             reportCardTable(db);
-            // console.log("successfull connected to",client)
+           
         }
     })
-    console.log("app is running on port 5000")
+    console.log("app is running on port",process.env.PORT || 3000)
 })
 
