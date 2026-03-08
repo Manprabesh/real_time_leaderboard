@@ -1,11 +1,23 @@
 import express from 'express';
+const app = express();
+
 import cors from 'cors';
 import 'dotenv/config'
-// dotenv.config();
-// import morgan from 'morgan';
-// import routes from './routes/index.js';
+import rateLimit from "express-rate-limit";
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute window
+  max: 100,            // limit each IP to 100 requests per window
+  message: {
+    status: 429,
+    error: "Too many requests, please try again later"
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
-const app = express();
+//rate limitter
+app.use(limiter);
+
 
 // Middleware
 app.use(cors());
